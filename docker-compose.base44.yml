@@ -1,0 +1,16 @@
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.base44
+    volumes:
+      - .:/app
+      - gradle-cache:/opt/gradle-home
+    environment:
+      - OVERRIDE_VERSION_NAME=5.10.0.0
+      - GRADLE_USER_HOME=/opt/gradle-home
+    command: >
+      bash -c "./gradlew assembleProductionVanillaOpenSourceDebug --no-daemon --max-workers=2 -Dorg.gradle.jvmargs='-Xmx4g --add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED' 2>&1"
+
+volumes:
+  gradle-cache:
